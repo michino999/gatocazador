@@ -32,7 +32,16 @@
     </div>
 
     <canvas id="juego" width="600" height="400"></canvas>
-    <div id="marcador">Puntos: <span id="puntos-valor">0</span></div>
+   <div id="marcador">
+    Puntos: <span id="puntos-valor">0</span>
+    | Tiempo: <span id="tiempo-valor">60</span>
+    | Récord: <span id="record-valor">0</span>
+</div>
+<div id="fin-juego" style="display:none; text-align:center;">
+    <h1>🏆 FIN DE LA PARTIDA 🏆</h1>
+    <p>Puntuación: <span id="puntos-finales"></span></p>
+    <button onclick="location.reload()">Jugar otra vez</button>
+</div>
 
     <script src="juego.js"></script>
 </body>

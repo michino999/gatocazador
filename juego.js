@@ -1,7 +1,8 @@
 const canvas = document.getElementById("juego");
 const ctx = canvas.getContext("2d");
-
+let tiempo = 60;
 let puntos = 0;
+let record = Number(localStorage.getItem("record")) || 0;
 let juegoIniciado = false;
 let velocidadGato = 20;
 
@@ -29,6 +30,7 @@ function empezarJuego() {
     document.getElementById("menu-inicio").style.display = "none";
     document.getElementById("juego").style.display = "block";
     document.getElementById("marcador").style.display = "block";
+    document.getElementById("record-valor").innerText = record;
     dibujar();
 }
 
@@ -54,10 +56,49 @@ window.addEventListener("keydown", (e) => {
         gato.y < raton.y + raton.h && gato.y + gato.h > raton.y) {
         puntos++;
         document.getElementById("puntos-valor").innerText = puntos;
+        if (puntos >= 10) {
+    velocidadGato = 30;
+}
+
+if (puntos >= 20) {
+    velocidadGato = 40;
+}
         raton.x = Math.random() * 560;
         raton.y = Math.random() * 360;
     }
     dibujar();
 });
+setInterval(() => {
+    if (!juegoIniciado) return;
 
+    tiempo--;
+    document.getElementById("tiempo-valor").innerText = tiempo;
+
+    if (tiempo <= 0) {
+
+    juegoIniciado = false;
+
+    if (puntos > record) {
+        record = puntos;
+        localStorage.setItem("record", record);
+    }
+
+    document.getElementById("juego").style.display = "none";
+    document.getElementById("marcador").style.display = "none";
+
+    document.getElementById("fin-juego").style.display = "block";
+    document.getElementById("puntos-finales").innerText = puntos;
+}
+}
+,1000);
+setInterval(() => {
+    if (!juegoIniciado) return;
+
+    raton.x = Math.random() * 560;
+    raton.y = Math.random() * 360;
+
+    dibujar();
+}, 2000);
+
+dibujar();
 dibujar(); // Dibujo inicial
